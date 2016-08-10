@@ -2,6 +2,7 @@ package com.kkskysite.ongloballayout;
 
 import android.annotation.TargetApi;
 import android.os.Build;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,34 +20,26 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.test);
+        postDelay();
+
+        pm=con=et=iec = true;
+
+    }
+    public void initView(){
+
         pmSign = (RelativeLayout) findViewById(R.id.pm_sign);
         contractorSign = (RelativeLayout) findViewById(R.id.contractor_sign);
         etSign = (RelativeLayout) findViewById(R.id.et_sign);
         iecSign = (RelativeLayout) findViewById(R.id.iec_sign);
-
-
         pm_layout = (LinearLayout) findViewById(R.id.pm_layout);
         contractor_layout = (LinearLayout) findViewById(R.id.contractor_layout);
         et_layout = (LinearLayout) findViewById(R.id.et_layout);
         iec_layout = (LinearLayout) findViewById(R.id.iec_layout);
-
         pm_layout.setVisibility(View.GONE);
         contractor_layout.setVisibility(View.GONE);
         et_layout.setVisibility(View.GONE);
         iec_layout.setVisibility(View.GONE);
-        pm=con=et=iec = true;
-//        setSignShow_02();
-        addOnGlobalLayoutListener_02();
-
-//        Handler handler = new Handler();
-//        handler.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//
-//            }
-//        },5000);
-        setSignShow_02();
     }
 
     private void setSignShow_02() {
@@ -67,12 +60,12 @@ public class MainActivity extends AppCompatActivity {
             etSign.setVisibility(View.VISIBLE);
             outputWidthHeight(etSign);
         }
-        if (false) {
+        if (true) {
             iec_layout.setVisibility(View.VISIBLE);
             iecSign.setVisibility(View.VISIBLE);
             outputWidthHeight(iecSign);
         }
-        addOnGlobalLayoutListener_02();
+//        addOnGlobalLayoutListener_02();
     }
 
     public void addOnGlobalLayoutListener_02(){
@@ -118,4 +111,15 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG, "outputWidthHeight: width: "+relativeLayout.getWidth()+" height: "+relativeLayout.getHeight());
     }
 
+    public void postDelay() {
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                initView();
+                addOnGlobalLayoutListener_02();
+                setSignShow_02();
+            }
+        },5000);
+    }
 }
